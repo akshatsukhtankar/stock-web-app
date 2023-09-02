@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Stock to Portfolio</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+</head>
+<body>
+    <div class="container">
+        <h3>{{ symbol }} Transaction</h3>
+        <form id="stockForm">
+            <div class="form-group">
+                <label for="transactionType">Transaction Type:</label>
+                <select id="transactionType" name="transactionType" class="form-control" required>
+                    <option value="buy">Buy</option>
+                    <option value="sell">Sell</option>
+                </select>
+
+                <label for="shareQuantity">Number of Shares:</label>
+                <input type="number" step="0.00001" id="shareQuantity" name="shareQuantity" class="form-control" required>
+                <label for="purchasePrice">Purchase Price($):</label>
+                <input type="number" step="0.00001" id="purchasePrice" name="purchasePrice" class="form-control" required>
+                <label for="date">Date of Transaction:</label>
+                <input type="date"  id="date" name="date" class="form-control" required>
+            </div>
+            <button onclick="window.location.href = '/';" type="submit" class="btn btn-primary">Add Stock</button>
+        </form>
+        <button onclick="window.location.href = '/';" id="cancelAdd" class="btn btn-secondary">Cancel</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
+<!-- Add the Popper.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<!-- Add the Bootstrap JavaScript library -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+<!-- Include your autocomplete.js script -->
+    <script src="/static/autocomplete.js"></script>
+
+</body>
+</html>

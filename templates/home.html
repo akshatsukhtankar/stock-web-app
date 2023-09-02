@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Welcome, {{ user.first_name }}!</h1>
+
+        <h2>Your Stock Portfolio</h2>
+        <h3>Total Value: ${{ total }}</h3>
+        <h3>Total Gain/Loss: <span class="{% if totalDollar>= 0 %}text-success{% else %}text-danger{% endif %}">${{ totalDollar }} ({{ totalPercent }}%)</span>
+</h3>
+        {% if user.stocks %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Current Price</th>
+                        <th>Shares</th>
+                        <th>Purchase Price</th>
+                        <th>Total Gain/Loss(%)</th>
+                        <th>Total Gain/Loss($)</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in user.stocks %}
+                        <tr>
+                            <td>{{ stock.companyName }}</td>
+                            <td>${{ stock.current_price }}</td>
+                            <td>{{ stock.quantity|round(2) }}</td>
+                            <td>${{ stock.purchasePrice }}</td>
+                            <td class="{% if stock.percent_gain < 0 %}text-danger{% else %}text-success{% endif %}">
+                                {{ stock.percent_gain }}%
+                            </td>
+                            <td class="{% if (stock.current_price - stock.purchasePrice) < 0 %}text-danger{% else %}text-success{% endif %}">
+                                ${{ ((stock.quantity * stock.current_price) - (stock.quantity * stock.purchasePrice))|round(2) }}
+                            </td>
+                            <td>{{ stock.date.strftime('%Y-%m-%d') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>You don't have any stocks in your portfolio yet. Use the Search Bar at the top of this page to add stocks.</p>
+        {% endif %}
+    </div>
+{% endblock %}
