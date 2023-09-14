@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add Stock to Portfolio</title>
+    <title>Cash Transaction</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -12,24 +12,24 @@
     />
 </head>
 <body>
+
     <div class="container">
-        <h3>{{ symbol }} Transaction</h3>
-        <form id="stockForm">
+        <h3>Cash Transaction</h3>
+        <form id="cashForm">
             <div class="form-group">
-                <label for="transactionType">Transaction Type:</label>
-                <select id="transactionType" name="transactionType" class="form-control" required>
-                    <option value="buy">Buy</option>
-                    <option value="sell">Sell</option>
+                <label for="cashTransactionType">Transaction Type:</label>
+                <select id="cashTransactionType" name="cashTransactionType" class="form-control" required>
+                    <option value="deposit">Deposit</option>
+                    <option value="withdraw">Withdraw</option>
                 </select>
 
-                <label for="shareQuantity">Number of Shares:</label>
-                <input type="number" step="0.00001" id="shareQuantity" name="shareQuantity" class="form-control" required>
-                <label for="purchasePrice">Purchase Price($):</label>
-                <input type="number" step="0.00001" id="purchasePrice" name="purchasePrice" class="form-control" required>
-                <label for="date">Date of Transaction:</label>
-                <input type="date"  id="date" name="date" class="form-control" required>
+                <label for="cashAmount">Amount ($):</label>
+                <input type="number" step="0.00001" id="cashAmount" name="cashAmount" class="form-control" required>
+                <label for="memo">Memo:</label>
+                <input type="text" step="0.00001" id="memo" name="memo" class="form-control" >
+
             </div>
-            <button onclick="window.location.href = '/';" type="submit" class="btn btn-primary">Add Stock</button>
+            <button onclick="window.location.href = '/';" type="submit" class="btn btn-primary">Submit</button>
         </form>
         <button onclick="window.location.href = '/';" id="cancelAdd" class="btn btn-secondary">Cancel</button>
     </div>
@@ -41,8 +41,9 @@
 <!-- Add the Bootstrap JavaScript library -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-<!-- Include your autocomplete.js script -->
-    <script src="/static/autocomplete.js"></script>
+<!-- Include your cash.js script -->
+    <script src="/static/cash.js"></script>
+
 
 </body>
 </html>
