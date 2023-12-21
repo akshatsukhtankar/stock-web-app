@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stock Symbol Lookup</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <form>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="stockSymbolInput" placeholder="Enter a stock symbol">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" id="lookupButton">Quote</button>
+                        </div>
+                    </div>
+                </form>
+                <div id="stockSymbolResult" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#lookupButton').click(function () {
+                const symbol = $('#stockSymbolInput').val();
+
+                // Check if the symbol is not empty
+                if (symbol.trim() === '') {
+                    $('#stockSymbolResult').html('<p>Please enter a stock symbol.</p>');
+                    return;
+                }
+
+                // Perform the stock symbol lookup using AJAX
+                $.ajax({
+                    url: '/quote/' + symbol,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        // Handle the response data and display it in #stockSymbolResult
+                        console.log(data);
+
+                        if (data.error) {
+                            $('#stockSymbolResult').html('<p>' + data.error + '</p>');
+                        } else {
+                            $('#stockSymbolResult').html('<p>Price: $' + data.c + '</p>');
+                        }
+                    },
+                    error: function () {
+                        $('#stockSymbolResult').html('<p>Lookup failed. Please try again later.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

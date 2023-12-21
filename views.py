@@ -16,6 +16,7 @@ def home():
     totalGainLoss_dollar = 0.0
     totalGainLoss_percent = 0.0
     if user_stocks:
+        #calculate total gain/loss and total value of portfolio
         for stock in user_stocks:
             current_price = get_current_price(stock.companyName)
             quantity = float(stock.quantity)
@@ -37,6 +38,33 @@ def home():
 
     return render_template("home.html", user=current_user, total=total, totalPercent=totalGainLoss_percent,
                            totalDollar=totalGainLoss_dollar)
+
+@views.route('/quotes', methods=['GET'])
+@login_required
+def quotes():
+    return render_template('quotes.html')
+
+@views.route('/quote/<symbol>', methods=['GET'])
+@login_required
+def quote(symbol):
+    finnhub_api_key = "cjl5kl1r01qvr02ibctgcjl5kl1r01qvr02ibcu0"  # Replace with your actual API key
+    api_url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={finnhub_api_key}"
+
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()
+        data = response.json()
+
+        current_price = data.get("c")  # Finnhub uses "c" for current price
+
+        if current_price:
+            return jsonify({"c": current_price})
+        else:
+            return jsonify({"error": "Symbol not found"}), 404
+
+    except requests.exceptions.RequestException as err:
+        print(f"Error fetching stock price: {err}")
+        return jsonify({"error": "Failed to fetch stock price"}), 500
 
 
 @views.route('/get-add-stock-form/<symbol>')
@@ -94,7 +122,7 @@ def update_stock_prices():
             percent = float((gainLoss / stock.purchasePrice) * 100)
             stock.percent_gain = round(percent, 2)
         else:
-            print("well")
+            print("")
 
     # Commit the changes to the database
     db.session.commit()

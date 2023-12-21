@@ -3,8 +3,8 @@
 {% block content %}
     <div class="container mt-4">
         <h2>Your Stock Portfolio</h2>
-        <h3>Total Value: ${{ (total + user.cash)|round(2) }}</h3>
-        <h4>Cash: ${{ user.cash }}</h4>
+        <h3>Total Value: ${{ ((total + user.cash)|round(2)) if user.cash is not none else total }}</h3>
+        <h4>Cash: ${{ user.cash if user.cash is not none else 0}}</h4>
         <h5>Total Gain/Loss: <span class="{% if totalDollar> 0 %}text-success{% elif totalDollar<0 %}text-danger{% endif %}">${{ totalDollar }} ({{ totalPercent }}%)</span>
 </h5>
         {% if user.stocks %}
